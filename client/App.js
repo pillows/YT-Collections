@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from 'react';
+import './App.scss';
+import { Subscriptions } from './components';
+import YTLogo from './images/YouTube_full-color_icon_(2017).svg';
+import Settings_Logo from './images/settings-32.ico'
+
+const NavOptions = (props) => {
+    const { ShowAccount, LoginAction, UserName } = props;
+    return [
+        <a key="subs">Subscriptions</a>,
+        <a key="colls">Collections</a>,
+        <a key="playlists">Playlists</a>,
+        <a key="vid">Video Player</a>,
+        ShowAccount ? <AccountView key="account" UserName={UserName} LoginAction={LoginAction} /> : null
+    ]
+};
+
+const AccountView = (props) => {
+    const { UserName, LoginAction } = props;
+    return UserName ? 
+        <a className="nav-name">{UserName}</a>
+        :
+        <a className="nav-name" onClick={LoginAction}>Sign In</a>
+    ;
+};
+
+const MobileNavBar = (props) => {
+    const { SetDropdown, ShowDropdown, LoginAction, UserName, Size } = props;
+
+    const NavButton = () => <a onClick={SetDropdown}>&#9776;</a>;
+
+    const NavDropDown = () => {
+        return (
+            <div className="nav-dropdown" style={{display: ShowDropdown ? 'flex' : 'none'}}>
+                <NavOptions ShowAccount={Size === 'small'} UserName={UserName} LoginAction={LoginAction} />
+            </div>
+        )
+    };
+
+    return (
+        <div className={Size === 'small' ? "small-nav" : "med-nav"}>
+            <div className="nav-bar">
+                <NavButton />
+                <a>PAGE</a>
+                { Size === 'medium' ? <AccountView UserName={UserName} LoginAction={LoginAction} /> : null }
+            </div>
+            <NavDropDown />
+        </div>
+    )
+}
+
+const NavBar = (props) => {
+    const { LoginAction, UserName } = props;
+    return (
+        <div className="large-nav">
+            <NavOptions ShowAccount={true} LoginAction={LoginAction} UserName={UserName} />
+        </div>
+    );
+}
+
+const App = () => {
+    const [UserName, setUserName] = useState('');
+    const [RedirectURL, setRedirectURL] = useState('');
+    const [ShowNavMenu, setShowNavMenu] = useState(false);
+
+    const OAuthLogin = () => window.location = RedirectURL;
+
+    useEffect(() => {
+        fetch('/auth/login')
+            .then(response => response.json())
+            .then(data => data.redirect ? setRedirectURL(data.redirect_url) : setUserName(data.username))
+            .catch(err => console.log(err));
+    }, []);
+
+    return (
+        <div>
+            <header>
+                <img className="logo" src={YTLogo} />
+                <h1>YT Collections</h1>
+            </header>
+            <nav>
+                <MobileNavBar Size={'small'} ShowDropdown={ShowNavMenu} SetDropdown={() => setShowNavMenu(!ShowNavMenu)} LoginAction={OAuthLogin} UserName={UserName} />
+                <MobileNavBar Size={'medium'} ShowDropdown={ShowNavMenu} SetDropdown={() => setShowNavMenu(!ShowNavMenu)} LoginAction={OAuthLogin} UserName={UserName} />
+                <NavBar LoginAction={OAuthLogin} UserName={UserName} />
+            </nav>
+            <div className="content">
+                { UserName ?
+                    <div>
+                        <p>Hello {UserName} </p>
+                    </div>
+                    :
+                    <div>
+                        <button className="signin" onClick={OAuthLogin}>Sign in with Google</button>
+                        <p>To Access features</p>
+                    </div>
+                }
+            </div>
+        </div>
+    );
+};
+
+export default App;

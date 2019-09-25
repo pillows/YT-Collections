@@ -1,0 +1,38 @@
+{
+  "name": "yt-collections",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./client/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run client\" \"export FLASK_ENV=development; npm run server\" --kill-others-on-fail -c green,blue",
+    "prod": "npm run build && python app.py",
+    "client": "export NODE_ENV=development && webpack --mode development --watch",
+    "server": "python app.py",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.6.1",
+    "babel-loader": "^8.0.6",
+    "concurrently": "^4.1.2",
+    "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  }
+}

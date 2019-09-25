@@ -1,0 +1,11 @@
+venv
+.flaskenv
+__pycache__
+
+node_modules
+build
+
+.vscode
+
+client_secret.json
+.env

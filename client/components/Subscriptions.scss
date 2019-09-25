@@ -1,0 +1,168 @@
+@import '../_partials';
+@import '../App';
+
+.search {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+    position: sticky;
+    top: 3.1rem;
+    background-color: black;
+
+    & > * {
+        border-radius: 0.2rem;
+        color: white;
+        margin: 1rem 0.5rem;
+    }
+
+    input {
+        @extend %base;
+        font-size: 1.1rem;
+        width: 25rem;
+        padding-left: 0.5rem;
+    }
+
+    embed {
+        height: 2rem;
+        margin: 0.1rem;
+    }
+
+    button {
+        @extend %base;
+        
+        &:hover { @extend %highlight }
+    }
+}
+
+.channel-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+
+    .channel {
+        border-radius: 5px;
+        padding: 0rem;
+        margin: 1rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        background-color: #2f2f2f;
+
+        &:hover {
+            box-shadow: 1px 1px 20px 5px white;
+        }
+
+        & > * {
+            margin: 0.1rem;
+            padding: 0.1rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        hr { 
+            padding: 0; 
+            margin-bottom: 0.5rem;
+        }
+
+        div > * { margin: 0 auto; }
+
+        .title {
+            font-weight: bold;
+            text-align: center;
+            width: 200px;
+            margin: 0.5rem;
+        }
+
+        .stats { margin: 0.5rem; }
+
+        .channel-img {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 220px 220px;
+            margin: 0;
+            width: 220px;
+            height: 220px;
+
+            .delete {
+                @extend %base;
+                font-size: 1.3rem;
+                display: none;
+                width: 35px;
+                height: 35px;
+                border-radius: 5px;
+                margin: 0.5rem 0.5rem auto auto;
+                float: right;
+                
+                &:hover { @extend %highlight; }
+            }
+
+            &:hover > .delete { display: block; }
+        }
+    }
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba($color: #1f1f1f, $alpha: 0.7);
+
+    .modal-content {
+        background-color: #2f2f2f;
+        margin: 15% auto;
+        width: 500px;
+        text-align: center;
+
+        .modal-title {
+            button {
+                @extend %base;
+                margin: 1rem 1rem auto auto;
+                float: right;
+                font-size: 1.3rem;
+
+                &:hover { @extend %highlight; }
+            }
+
+            h1 {
+                font-size: 2.2rem;
+                padding-top: 2rem;
+                padding-left: 3.5rem;
+            }
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        .modal-options {
+            padding: 1rem; 
+        
+            button {
+                @extend %base;
+                font-size: 1.1rem;
+                padding: 0.6rem;
+                margin: 1rem;
+                border: initial;
+
+                &:hover {
+                    @extend %highlight;
+                }
+            }
+        }
+
+        embed {
+            margin: 1rem;
+            width: 250px;
+            height: 250px;
+        }
+    }
+}
