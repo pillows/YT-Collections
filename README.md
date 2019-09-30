@@ -18,14 +18,18 @@
 - Webpack to bundle files
 - Redux to cache initial states that require network requests to set
 
-
 ## TODO
+- Modify PyMongo to now use Google Cloud Firestore client library
+- Use Google Cloud Memcache instead of redis
+
 - NavBar
     - [ ] Finish Account View/Settings
 
 - Subscriptions
     - [ ] Subscriptions Component
-    - [ ] Show channel name, views, subscribers count, and date of subscribe
+    - [ ] Show channel name and date of subscribe
+    - [ ] Show remove subscription button
+    - [ ] Create modal for channel
 
 - Channel
     - [ ] Show recent videos

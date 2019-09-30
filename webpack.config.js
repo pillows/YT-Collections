@@ -6,7 +6,7 @@ const development = process.env.NODE_ENV === 'development';
 module.exports = {
     entry: './client/index.js',
     output: {
-        path: development ? path.resolve('client/build') : path.resolve('client/dist'),
+        path: path.resolve(`client/${ development ? 'build' : 'dist' }`),
         filename: 'main.js'
     },
     module: {
@@ -19,7 +19,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    development ? 'style-loader' : MiniCSSExtractPlugin.loader,
+                    MiniCSSExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                     'postcss-loader'
@@ -40,5 +40,12 @@ module.exports = {
             template: './client/public/index.html',
             filename: './index.html'
         })
-    ]
+    ],
+    devServer: {
+        proxy: {
+            '/api': {
+                target: 'http://localhost:5000',
+            }
+        },
+    }
 };

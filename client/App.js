@@ -41,7 +41,10 @@ const MobileNavBar = (props) => {
         <div className={Size === 'small' ? "small-nav" : "med-nav"}>
             <div className="nav-bar">
                 <NavButton />
-                <a>PAGE</a>
+                <a className="title">
+                    <img src={YTLogo} />
+                    <h4>YT Collections</h4>
+                </a>
                 { Size === 'medium' ? <AccountView UserName={UserName} LoginAction={LoginAction} /> : null }
             </div>
             <NavDropDown />
@@ -53,6 +56,10 @@ const NavBar = (props) => {
     const { LoginAction, UserName } = props;
     return (
         <div className="large-nav">
+            <a className="title">
+                <img src={YTLogo} />
+                <h4>YT Collections</h4>
+            </a>
             <NavOptions ShowAccount={true} LoginAction={LoginAction} UserName={UserName} />
         </div>
     );
@@ -66,7 +73,7 @@ const App = () => {
     const OAuthLogin = () => window.location = RedirectURL;
 
     useEffect(() => {
-        fetch('/auth/login')
+        fetch('/api/auth/login')
             .then(response => response.json())
             .then(data => data.redirect ? setRedirectURL(data.redirect_url) : setUserName(data.username))
             .catch(err => console.log(err));
@@ -74,27 +81,12 @@ const App = () => {
 
     return (
         <div>
-            <header>
-                <img className="logo" src={YTLogo} />
-                <h1>YT Collections</h1>
-            </header>
             <nav>
                 <MobileNavBar Size={'small'} ShowDropdown={ShowNavMenu} SetDropdown={() => setShowNavMenu(!ShowNavMenu)} LoginAction={OAuthLogin} UserName={UserName} />
                 <MobileNavBar Size={'medium'} ShowDropdown={ShowNavMenu} SetDropdown={() => setShowNavMenu(!ShowNavMenu)} LoginAction={OAuthLogin} UserName={UserName} />
                 <NavBar LoginAction={OAuthLogin} UserName={UserName} />
             </nav>
-            <div className="content">
-                { UserName ?
-                    <div>
-                        <p>Hello {UserName} </p>
-                    </div>
-                    :
-                    <div>
-                        <button className="signin" onClick={OAuthLogin}>Sign in with Google</button>
-                        <p>To Access features</p>
-                    </div>
-                }
-            </div>
+            <Subscriptions />
         </div>
     );
 };

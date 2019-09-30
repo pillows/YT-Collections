@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run client\" \"export FLASK_ENV=development; npm run server\" --kill-others-on-fail -c green,blue",
     "prod": "npm run build && python app.py",
-    "client": "export NODE_ENV=development && webpack --mode development --watch",
+    "client": "export NODE_ENV=development && webpack-dev-server --mode development --open --hot",
     "server": "python app.py",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -33,6 +33,7 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }
